@@ -1,0 +1,42 @@
+artifacts_root: artifacts
+
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion  
+  unzip_dir: artifacts/data_ingestion
+  local_data_file: artifacts/data_ingestion/data.zip
+  # use-case specific parameters
+  source_URL: "abhi8923shriv/sentiment-analysis-dataset"  
+  outsource_file: sentiment-analysis-dataset.zip
+
+
+data_validation:
+  root_dir: artifacts/data_validation
+  status_file: artifacts/data_validation/status.txt
+
+
+data_transformation:
+  root_dir: artifacts/data_transformation
+  dataset_path: artifacts/data_ingestion/processed 
+  tokenizer_name: bert-base-cased   
+
+# Use case specific - Sentiment
+sentiment_model_trainer_and_evaluation:
+  root_dir: artifacts/model_trainer/sentiment/model
+  pre_trained_model_name: bert-base-cased 
+  model_ckpt: artifacts/model_trainer/sentiment/model/sentiment_best_model_state.bin
+
+
+sentiment_model_prediction:
+  tokenizer_name: bert-base-cased   
+  pre_trained_model_name: bert-base-cased
+  model_ckpt: artifacts/model_trainer/sentiment/model/sentiment_best_model_state.bin
+
+
+#<-------------- Summarization ----------------------->
+summary_data_ingestion:
+  root_dir: artifacts/data_ingestion
+  source_URLs: "sbhatti/news-summarization"
+  local_data_file: artifacts/data_ingestion/summary/data.zip
+  unzip_dir: artifacts/data_ingestion/summary
+  # outsource_file: sentiment-analysis-dataset.zip

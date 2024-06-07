@@ -1,0 +1,5 @@
+uc_api_venv/
+.github/
+**/__pycache__/
+src/uc_api.egg-info/
+artifacts/

@@ -1,0 +1,15 @@
+ipykernel
+ipywidgets
+PyYAML
+ensure
+python-box  # for dot extension usage
+py7zr  # for zip file
+datasets # for importing outsource datasets 
+fastapi
+nltk
+transformers
+torch --index-url https://download.pytorch.org/whl/cu118
+uvicorn
+scikit-learn
+kaggle
+-e .
