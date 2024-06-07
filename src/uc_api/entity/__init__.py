@@ -10,11 +10,14 @@ class DataIngestionConfig:
     local_data_file: Path
 
     # Common Parameters
+    data_split_type: list
     data_split_ratio: float   
 
     # Parameters
     source_URL: Path  
     outsource_file: Path
+    feature_column_name: str
+    label_column_name: str
 
 
 @dataclass(frozen=True)

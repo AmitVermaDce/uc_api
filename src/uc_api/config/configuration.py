@@ -28,6 +28,9 @@ class ConfigurationManager:
         # Common Arguments Parameters from yaml file
         params_common = self.params.CommonArguments
 
+        # Use case specific(Sentiment) parameters from yaml file
+        params = self.params.SentimentArguments   
+
         create_directories([config.root_dir])
 
         data_ingestion_config = DataIngestionConfig(
@@ -37,11 +40,15 @@ class ConfigurationManager:
             local_data_file=config.local_data_file,
 
             # Common Arguments Parameters
+            data_split_type=params_common.data_split_type,
             data_split_ratio=params_common.data_split_ratio,
 
             # Use case specific parameters   
             source_URL=config.source_URL,
-            outsource_file=config.outsource_file,            
+            outsource_file=config.outsource_file, 
+            feature_column_name=params.feature_column_name,
+            label_column_name = params.label_column_name,
+
         )
 
         return data_ingestion_config

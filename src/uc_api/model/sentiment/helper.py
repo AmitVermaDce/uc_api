@@ -17,11 +17,15 @@ class SentimentHelper:
 
         losses = []
         correct_predictions = 0
-
+        
+        print(len([each for each in data_loader]))
         for d in data_loader:
             input_ids = d["input_ids"].to(device)
             attention_mask = d["attention_mask"].to(device)
             targets = d["sentimentRating"].to(device)
+            print("Input size: ", input_ids.shape)
+            print("Attention size: ", attention_mask.shape)
+            print("Target size: ", targets.shape)
 
             outputs = model(
             input_ids=input_ids,
@@ -33,14 +37,16 @@ class SentimentHelper:
 
             correct_predictions += torch.sum(preds == targets)#.detach().cpu().numpy()
             losses.append(loss.item())
-            print(losses[-1])
 
             loss.backward()
+
+            # Avoiding the exploding gradients
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+
             optimizer.step()
             scheduler.step()
             optimizer.zero_grad()
-            print("-------end ")
+            print("----------\n")
 
 
         return correct_predictions.double() / n_examples, np.mean(losses)
@@ -57,6 +63,9 @@ class SentimentHelper:
                 input_ids = d["input_ids"].to(device)
                 attention_mask = d["attention_mask"].to(device)
                 targets = d["sentimentRating"].to(device)
+                print("Input size: ", input_ids.shape)
+                print("Attention size: ", attention_mask.shape)
+                print("Target size: ", targets.shape)
 
                 outputs = model(
                     input_ids=input_ids,
@@ -68,5 +77,6 @@ class SentimentHelper:
 
                 correct_predictions += torch.sum(preds == targets)#.detach().cpu().numpy()
                 losses.append(loss.item())
+                print("----------\n")
 
             return correct_predictions.double() / n_examples, np.mean(losses)

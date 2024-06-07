@@ -29,7 +29,6 @@ class SentimentModelTrainer:
             data_loader = torch.load(os.path.join(self.config.transformation_root_dir, f"{dataset_class}_dataloader.pt"))
             data_loader_dict[dataset_class] = data_loader
             data_loader_dict[f"{dataset_class}_len"] = sum([len(each) for each in data_loader])
-        print(data_loader_dict["train_len"])
 
 
         # number of epochs
@@ -50,7 +49,8 @@ class SentimentModelTrainer:
         best_accuracy = 0
         for epoch in range(epochs):
             print(f"\nEpoch {epoch + 1}/{epochs}")
-            print("-" * 50)
+            print("-" * 50)            
+
             if data_loader_dict.keys().__contains__("train"):
                 train_acc, train_loss = SentimentHelper.train_epoch(
                     model,

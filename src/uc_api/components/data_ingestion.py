@@ -66,9 +66,20 @@ class DataIngestion:
             dataset = load_dataset(
                 suffix, 
                 data_files=os.path.join(self.config.unzip_dir, selected_file),
-                encoding='unicode_escape',
-                
+                encoding='unicode_escape',                
             )["train"].train_test_split(test_size=self.config.data_split_ratio, seed=42)
+
+            # Filteration of the columns based on the train test split
+            columns_to_keep = [self.config.feature_column_name, self.config.label_column_name]            
+            def filter_columns(example):
+                return {key: example[key] for key in columns_to_keep}
+            if self.config.data_split_type.__contains__("train"):
+                dataset["train"] = dataset['train'].map(filter_columns, remove_columns=dataset['train'].column_names)
+            if self.config.data_split_type.__contains__("test"):
+                dataset["test"] = dataset['test'].map(filter_columns, remove_columns=dataset['test'].column_names)
+            
+            print(dataset)
+            # Save the dataloader
             dataset.save_to_disk(os.path.join(self.config.root_dir, "processed"))
             logger.info("Successfully created arrow dataset")
         except Exception as e:
