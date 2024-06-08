@@ -1,5 +1,5 @@
 from src.uc_api.config.configuration import ConfigurationManager
-from uc_api.components.data_ingestion import DataIngestion
+from uc_api.components.data_ingestion_sentiment import DataIngestion
 
 
 class DataIngestionTrainingPipeline:
