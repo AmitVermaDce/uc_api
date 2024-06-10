@@ -1,5 +1,5 @@
 from src.uc_api.config.configuration import ConfigurationManager
-from src.uc_api.components.data_transformation_sentiment import (
+from uc_api.components.sentiment_data_transformation import (
     SentimentDataTransformation,
 )
 

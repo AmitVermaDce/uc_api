@@ -3,7 +3,7 @@ import torch
 from transformers import (
     get_linear_schedule_with_warmup,
 )
-from src.uc_api.entity import SentimentModelTrainerConfig
+from src.uc_api.entity import SentimentModelTrainerEvaluationConfig
 from src.uc_api.model.sentiment.sentiment_classifier import SentimentClassifier
 from src.uc_api.model.sentiment.helper import SentimentHelper
 from collections import defaultdict
@@ -13,9 +13,9 @@ accelerator = Accelerator()
 
 
 
-class SentimentModelTrainer:
+class SentimentModelTrainerAndEvaluation:
 
-    def __init__(self, config: SentimentModelTrainerConfig):
+    def __init__(self, config: SentimentModelTrainerEvaluationConfig):
         self.config = config
 
     def train_and_evaluate_sentiment_model(self):
@@ -66,7 +66,7 @@ class SentimentModelTrainer:
             print("-" * 50)       
             
             # <=============== Executing the training module ===============>
-            train_accuracy, train_loss = SentimentHelper.train_epoch(
+            train_accuracy, train_loss = SentimentHelper.train_model(
                     model,
                     data_loader_train,
                     loss_fn,

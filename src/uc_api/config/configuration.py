@@ -4,7 +4,8 @@ from src.uc_api.entity import (
     DataIngestionConfig,
     DataValidationConfig,
     DataTransformationConfig,
-    SentimentModelTrainerConfig,
+    SentimentModelTrainerEvaluationConfig,
+    SentimentModelTestingConfig,
     SentimentPredictionConfig,
 )
 
@@ -108,7 +109,7 @@ class ConfigurationManager:
         return data_transformation_config
     
 
-    def get_sentiment_model_trainer_config(self) -> SentimentModelTrainerConfig:
+    def get_sentiment_model_trainer_and_evaluation_config(self) -> SentimentModelTrainerEvaluationConfig:
         # Data Transformation configurations from yaml file
         config_prev = self.config.data_transformation
 
@@ -123,7 +124,7 @@ class ConfigurationManager:
 
         create_directories([config.root_dir])
 
-        sentiment_model_trainer_config = SentimentModelTrainerConfig(
+        sentiment_model_trainer_evaluation_config = SentimentModelTrainerEvaluationConfig(
             # Sentiment Data Transformation configurations            
             transformation_root_dir=config_prev.root_dir, 
             tokenizer_name=config_prev.tokenizer_name,           
@@ -143,4 +144,60 @@ class ConfigurationManager:
             max_length=params.max_length,
         )
 
-        return sentiment_model_trainer_config
+        return sentiment_model_trainer_evaluation_config
+    
+
+    def get_sentiment_model_testing_config(self) -> SentimentModelTestingConfig:
+        # Data Transformation configurations from yaml file
+        config_prev_transformation = self.config.data_transformation
+
+        # Model Trainer and Evaluation configurations from yaml file
+        config_prev_model_trainer = self.config.sentiment_model_trainer_and_evaluation
+
+        # Use case specific(Sentiment) parameters from yaml file
+        params = self.params.SentimentArguments  
+
+        sentiment_model_testing_config = SentimentModelTestingConfig(
+
+            # Sentiment Data Ingestion configurations
+            test_dataset_path=config_prev_transformation.root_dir,
+
+            # Sentiment Model Trainer configurations
+            pre_trained_model_name=config_prev_model_trainer.pre_trained_model_name,           
+            model_ckpt=config_prev_model_trainer.model_ckpt,
+
+            # Sentiment Parameters
+            sentiment_class_dict=params.sentiment_class_dict,  
+            max_length=params.max_length,
+            dropout_parameter=params.dropout_parameter,
+        )
+
+        return sentiment_model_testing_config
+
+
+    def get_sentiment_prediction_config(self) -> SentimentPredictionConfig:
+
+        config_prev_transformation = self.config.data_transformation
+
+        # Model Trainer and Evaluation configurations from yaml file
+        config_prev_model_trainer = self.config.sentiment_model_trainer_and_evaluation
+
+        # Use case specific(Sentiment) parameters from yaml file
+        params = self.params.SentimentArguments  
+
+        sentiment_model_prediction_config = SentimentPredictionConfig(
+
+            # Sentiment Transformation configurations            
+            tokenizer_name=config_prev_transformation.tokenizer_name,
+
+            # Sentiment Model Trainer configurations           
+            pre_trained_model_name=config_prev_model_trainer.pre_trained_model_name,
+            model_ckpt=config_prev_model_trainer.model_ckpt,
+
+            # Sentiment Parameters
+            sentiment_class_dict=params.sentiment_class_dict,  
+            max_length=params.max_length,
+            dropout_parameter=params.dropout_parameter,
+        )
+
+        return sentiment_model_prediction_config

@@ -7,8 +7,11 @@ from src.uc_api.pipeline.stage_02_data_validation import (
 from src.uc_api.pipeline.stage_03_sentiment_data_transformation import (
     SentimentDataTransformationPipeline,
 )
-from src.uc_api.pipeline.stage_04_sentiment_model_trainer import (
+from uc_api.pipeline.stage_04_sentiment_model_trainer_and_evaluate import (
     SentimentModelTrainerAndEvaluationPipeline,
+)
+from uc_api.pipeline.stage_05_sentiment_model_test import (
+    SentimentModelTestingPipeline,
 )
 from src.uc_api.logging import logger
 
@@ -49,6 +52,17 @@ STAGE_NAME = "Model Trainer & Evaluation stage"
 try:
     logger.info(f">>>>>> stage: {STAGE_NAME} started <<<<<<")
     model_trainer = SentimentModelTrainerAndEvaluationPipeline()
+    model_trainer.main()
+    logger.info(f">>>>>> stage: {STAGE_NAME} completed <<<<<<\n\nx===============================x")
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+
+STAGE_NAME = "Model Testing stage"
+try:
+    logger.info(f">>>>>> stage: {STAGE_NAME} started <<<<<<")
+    model_trainer = SentimentModelTestingPipeline()
     model_trainer.main()
     logger.info(f">>>>>> stage: {STAGE_NAME} completed <<<<<<\n\nx===============================x")
 except Exception as e:

@@ -49,7 +49,7 @@ class DataTransformationConfig:
 
 
 @dataclass(frozen=True)
-class SentimentModelTrainerConfig:
+class SentimentModelTrainerEvaluationConfig:
     # Common Parameters
     data_split_type: list 
 
@@ -65,6 +65,20 @@ class SentimentModelTrainerConfig:
     num_train_epochs: int    
     dropout_parameter: float        
     max_length: int
+
+
+@dataclass(frozen=True)
+class SentimentModelTestingConfig:
+    
+    # Use case specific Configurations
+    test_dataset_path:str
+    pre_trained_model_name:str           
+    model_ckpt:Path    
+
+    # Use case specific Parameters
+    sentiment_class_dict: dict       
+    max_length: int
+    dropout_parameter: float
 
 
 @dataclass(frozen=True)

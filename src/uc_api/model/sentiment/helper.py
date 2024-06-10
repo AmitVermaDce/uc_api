@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 class SentimentHelper:
 
-    def train_epoch(
+    def train_model(
         model,
         train_dataloader,
         loss_fn,
@@ -26,9 +26,6 @@ class SentimentHelper:
             input_ids = batch["input_ids"].to(device)
             attention_mask = batch["attention_mask"].to(device)
             targets = batch["sentimentRating"].to(device)
-            print("Input size: ", input_ids.shape)
-            print("Attention size: ", attention_mask.shape)
-            print("Target size: ", targets.shape)
 
             outputs = model(
             input_ids=input_ids,
@@ -57,6 +54,7 @@ class SentimentHelper:
 
 
     def eval_model(model, data_loader, loss_fn, device, n_examples):
+        progress_bar = tqdm(range(n_examples))
         model = model.eval()
 
         losses = []
@@ -67,9 +65,6 @@ class SentimentHelper:
                 input_ids = d["input_ids"].to(device)
                 attention_mask = d["attention_mask"].to(device)
                 targets = d["sentimentRating"].to(device)
-                print("Input size: ", input_ids.shape)
-                print("Attention size: ", attention_mask.shape)
-                print("Target size: ", targets.shape)
 
                 outputs = model(
                     input_ids=input_ids,
@@ -81,6 +76,8 @@ class SentimentHelper:
 
                 correct_predictions += torch.sum(preds == targets)#.detach().cpu().numpy()
                 losses.append(loss.item())
-                print("----------\n")
+                progress_bar.update(1)
 
-            return correct_predictions.double() / n_examples, np.mean(losses)
+            return correct_predictions.double() / n_examples, np.mean(losses)     
+
+    

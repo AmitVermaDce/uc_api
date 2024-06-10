@@ -13,4 +13,5 @@ accelerate
 uvicorn
 scikit-learn
 kaggle
+matplotlib
 -e .
