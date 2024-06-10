@@ -9,6 +9,7 @@ fastapi
 nltk
 transformers
 torch --index-url https://download.pytorch.org/whl/cu118
+accelerate
 uvicorn
 scikit-learn
 kaggle

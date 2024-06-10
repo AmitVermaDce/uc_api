@@ -8,6 +8,10 @@ from src.uc_api.model.sentiment.sentiment_classifier import SentimentClassifier
 from src.uc_api.model.sentiment.helper import SentimentHelper
 from collections import defaultdict
 
+from accelerate import Accelerator
+accelerator = Accelerator()
+
+
 
 class SentimentModelTrainer:
 
@@ -15,7 +19,13 @@ class SentimentModelTrainer:
         self.config = config
 
     def train_and_evaluate_sentiment_model(self):
+        # Device configuration
         device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        # Loading Train and Validation dataloaders
+        data_loader_train = torch.load(os.path.join(self.config.transformation_root_dir, "train_dataloader.pt"))
+        data_loader_validation = torch.load(os.path.join(self.config.transformation_root_dir, "validation_dataloader.pt"))
+
         # Raw BERT model picked with preset configurations
         model = SentimentClassifier(
             len(self.config.sentiment_class_dict.values()),
@@ -23,67 +33,71 @@ class SentimentModelTrainer:
             self.config.dropout_parameter,
         ).to(device)
 
-        # Populating dataloader based as data split type
-        data_loader_dict = {}
-        for dataset_class in self.config.data_split_type:
-            data_loader = torch.load(os.path.join(self.config.transformation_root_dir, f"{dataset_class}_dataloader.pt"))
-            data_loader_dict[dataset_class] = data_loader
-            data_loader_dict[f"{dataset_class}_len"] = sum([len(each) for each in data_loader])
-
-
-        # number of epochs
-        epochs = self.config.num_train_epochs
         # Optimizer
         optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
+
+        # Accelerate optimization
+        data_loader_train, data_loader_validation, model, optimizer = accelerator.prepare(
+            data_loader_train, data_loader_validation, model, optimizer,
+            )        
+
+        # number of epochs
+        num_epochs = self.config.num_train_epochs
+
         # Number of steps for processing  
-        total_steps = len(data_loader_dict["train"]) * epochs
+        total_steps_train = len(data_loader_train) * num_epochs      
+        
         # Scheduler
-        scheduler = get_linear_schedule_with_warmup(
-            optimizer, num_warmup_steps=0, num_training_steps=total_steps,
+        scheduler_train = get_linear_schedule_with_warmup(
+            optimizer, 
+            num_warmup_steps=0, 
+            num_training_steps=total_steps_train,
             )
+        
         # Loss function
-        loss_fn = torch.nn.CrossEntropyLoss().to(device)
+        loss_fn = torch.nn.CrossEntropyLoss().to(device)        
 
         # Calling model trainer on dataloader
         history = defaultdict(list)
         best_accuracy = 0
-        for epoch in range(epochs):
-            print(f"\nEpoch {epoch + 1}/{epochs}")
-            print("-" * 50)            
 
-            if data_loader_dict.keys().__contains__("train"):
-                train_acc, train_loss = SentimentHelper.train_epoch(
+        for epoch in range(num_epochs):
+            print(f"\nEpoch {epoch + 1}/{num_epochs}")
+            print("-" * 50)       
+            
+            # <=============== Executing the training module ===============>
+            train_accuracy, train_loss = SentimentHelper.train_epoch(
                     model,
-                    data_loader_dict["train"],
+                    data_loader_train,
                     loss_fn,
                     optimizer,
                     device,
-                    scheduler,
-                    data_loader_dict["train_len"],
+                    scheduler_train,
+                    len(data_loader_train),
+                    accelerator,
                 )
-                print(f'Train loss {train_loss}, accuracy {train_acc}')
-                history['train_acc'].append(train_acc)
-                history['train_loss'].append(train_loss)
+            print(f'Train loss {train_loss}, accuracy {train_accuracy}')
+            history['train_accuracy'].append(train_accuracy)
+            history['train_loss'].append(train_loss)     
 
-            if data_loader_dict.keys().__contains__("test"):
-                test_acc, test_loss = SentimentHelper.eval_model(
+            # <=============== Executing the validation module ===============>
+            validation_accuracy, validation_loss = SentimentHelper.eval_model(
                     model,
-                    data_loader_dict["test"],
+                    data_loader_validation,
                     loss_fn,
                     device,
-                    data_loader_dict["test_len"],)
-                print(f'Test loss {test_loss}, accuracy {test_acc}')            
-                history['test_acc'].append(test_acc)
-                history['test_loss'].append(test_loss)
+                    len(data_loader_validation),)
+            print(f'Validation loss {validation_loss}, accuracy {validation_accuracy}')            
+            history['validation_accuracy'].append(validation_accuracy)
+            history['test_loss'].append(validation_loss)
 
-            if test_acc and (test_acc > best_accuracy):
+            if validation_accuracy and (validation_accuracy > best_accuracy):
                 torch.save(model.state_dict(), self.config.model_ckpt)
-                best_accuracy = test_acc
-            # else:
-            #     torch.save(model.state_dict(), self.config.model_ckpt)
-            #     best_accuracy = train_acc
+                best_accuracy = validation_accuracy
 
-           
+            
+
+            
 
         
         

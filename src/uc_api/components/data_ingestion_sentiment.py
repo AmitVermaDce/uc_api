@@ -3,7 +3,7 @@ import kaggle
 import zipfile
 from pathlib import Path
 import urllib.request as request
-from datasets import load_dataset
+from datasets import *
 from src.uc_api.logging import logger
 from src.uc_api.utils.common import get_size
 from src.uc_api.entity import DataIngestionConfig
@@ -63,24 +63,34 @@ class DataIngestion:
                 filename for filename in filenames if filename.endswith(suffix) and filename.__contains__("train")
             ][0]
 
-            dataset = load_dataset(
+            # Splitting the dataset in train and test dataset
+            train_test_dataset = load_dataset(
                 suffix, 
                 data_files=os.path.join(self.config.unzip_dir, selected_file),
                 encoding='unicode_escape',                
             )["train"].train_test_split(test_size=self.config.data_split_ratio, seed=42)
 
-            # Filteration of the columns based on the train test split
+            # Splitting the dataset in test and validation dataset
+            test_valid_dataset = train_test_dataset["test"].train_test_split(test_size=0.5)
+
+            # Dataset split dictionary
+            dataset = DatasetDict({
+                "train": train_test_dataset["train"],
+                "validation": test_valid_dataset["train"],
+                "test": test_valid_dataset["test"],
+            })
+
+            # Filteration of the columns based on the dataset split dictionary
             columns_to_keep = [self.config.feature_column_name, self.config.label_column_name]            
             def filter_columns(example):
                 return {key: example[key] for key in columns_to_keep}
-            if self.config.data_split_type.__contains__("train"):
-                dataset["train"] = dataset['train'].map(filter_columns, remove_columns=dataset['train'].column_names)
-            if self.config.data_split_type.__contains__("test"):
-                dataset["test"] = dataset['test'].map(filter_columns, remove_columns=dataset['test'].column_names)
             
-            print(dataset)
+            # remove unncessary columns from each Data split
+            for split_type in dataset.keys():
+                dataset[split_type] = dataset[split_type].map(filter_columns, remove_columns=dataset[split_type].column_names)
             # Save the dataloader
             dataset.save_to_disk(os.path.join(self.config.root_dir, "processed"))
+            print(dataset)
             logger.info("Successfully created arrow dataset")
         except Exception as e:
             logger.info("Error creating arrow dataset")
