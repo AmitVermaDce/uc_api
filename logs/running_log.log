@@ -399,3 +399,17 @@ x===============================x]
 [2024-06-11 10:41:15: INFO:common: created directory at: artifacts]
 [2024-06-11 10:41:15: INFO:common: created directory at: artifacts/summarizer/data_validation/]
 [2024-06-11 10:41:15: INFO:609173560: Validation status: True]
+[2024-06-11 13:11:41: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 13:11:41: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 13:11:41: INFO:common: created directory at: artifacts]
+[2024-06-11 13:12:15: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 13:12:15: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 13:12:15: INFO:common: created directory at: artifacts]
+[2024-06-11 13:12:45: INFO:app: <--------Sentiment Model called for prediction-------->]
+[2024-06-11 13:12:45: INFO:app: 
+Text: Testing the model response with some random text 
+Sentiment Probabilities: 
+	{'negative': 0.20950724184513092, 'neutral': 0.6376392841339111, 'positive': 0.15285354852676392}
+Sentiment: neutral
+confidence: 0.6376392841339111 
+]

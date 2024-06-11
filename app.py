@@ -3,7 +3,7 @@ import uvicorn
 from fastapi import FastAPI, Depends
 from fastapi.responses import Response
 from starlette.responses import RedirectResponse
-from uc_api.pipeline.stage_06_sentiment_prediction import SentimentPredictionPipeline, get_sentiment_model
+from uc_api.pipeline.sentiment.stage_06_prediction import PredictionPipeline, get_sentiment_model
 from src.uc_api.model.sentiment.schema import SentimentRequest, SentimentResponse
 from src.uc_api.logging import logger
 
@@ -34,7 +34,7 @@ async def sentiment_training():
 )
 async def do_sentiment_predict(
     request: SentimentRequest,
-    model: SentimentPredictionPipeline = Depends(
+    model: PredictionPipeline = Depends(
         get_sentiment_model,
     ),
 ):
