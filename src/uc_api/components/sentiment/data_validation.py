@@ -1,17 +1,17 @@
 import os
-from src.uc_api.entity import DataValidationConfig
+from src.uc_api.entity import SentimentDataValidationConfig
 from src.uc_api.logging import logger
 
 
 class DataValidation:
-    def __init__(self, config: DataValidationConfig):
+    def __init__(self, config: SentimentDataValidationConfig):
         self.config = config
 
     def validate_all_files_exist(self) -> bool:
         try:
             # Check for directories based on data split type example [train, test]
             validation_status = True
-            path = os.path.join("artifacts", "data_ingestion", "processed")
+            path = os.path.join("artifacts", "sentiment\data_ingestion", "processed")
             dataset_dirs = [f.name for f in os.scandir(path) if f.is_dir()]
             for dataset_type in dataset_dirs:
                 if dataset_type not in self.config.data_split_type:

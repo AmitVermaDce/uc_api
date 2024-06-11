@@ -5,7 +5,7 @@ from src.uc_api.model.sentiment.sentiment_classifier import SentimentClassifier
 from src.uc_api.model.sentiment.helper import SentimentHelper
 
 
-class SentimentModelTesting:
+class ModelTesting:
 
     def __init__(self, config: SentimentModelTestingConfig):
         self.config = config

@@ -5,7 +5,7 @@ from src.uc_api.config.configuration import ConfigurationManager
 from src.uc_api.model.sentiment.sentiment_classifier import SentimentClassifier
 
 
-class SentimentPredictionPipeline:
+class PredictionPipeline:
     def __init__(self):
         self.config = ConfigurationManager().get_sentiment_prediction_config()
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -59,7 +59,7 @@ class SentimentPredictionPipeline:
         )
 
 
-sentiment_prediction_pipeline = SentimentPredictionPipeline()
+sentiment_prediction_pipeline = PredictionPipeline()
 
 
 def get_sentiment_model():

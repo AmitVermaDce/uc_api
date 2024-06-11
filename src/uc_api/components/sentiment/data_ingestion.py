@@ -6,12 +6,12 @@ import urllib.request as request
 from datasets import *
 from src.uc_api.logging import logger
 from src.uc_api.utils.common import get_size
-from src.uc_api.entity import DataIngestionConfig
+from src.uc_api.entity import SentimentDataIngestionConfig
 
 
 
 class DataIngestion:
-    def __init__(self, config: DataIngestionConfig):
+    def __init__(self, config: SentimentDataIngestionConfig):
         self.config = config
     
     def download_file(self, source=None):    
@@ -58,9 +58,12 @@ class DataIngestion:
         """
         try:
             suffix = "csv"
+            raw_file_name="train.csv"
+
+            # File selection
             filenames = os.listdir(self.config.unzip_dir)
             selected_file = [
-                filename for filename in filenames if filename.endswith(suffix) and filename.__contains__("train")
+                filename for filename in filenames if filename.endswith(suffix) and filename.__contains__(raw_file_name)
             ][0]
 
             # Splitting the dataset in train and test dataset

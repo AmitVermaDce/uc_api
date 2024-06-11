@@ -4,7 +4,7 @@ from torch.utils.data import Dataset, DataLoader
 from transformers import BertTokenizer
 from datasets import load_from_disk 
 from src.uc_api.logging import logger
-from src.uc_api.entity import DataTransformationConfig
+from src.uc_api.entity import SentimentDataTransformationConfig
 
 
 # BERT based encoding
@@ -41,8 +41,8 @@ class SentimentDataset(Dataset):
         }
 
 
-class SentimentDataTransformation:
-    def __init__(self, config: DataTransformationConfig):
+class DataTransformation:
+    def __init__(self, config: SentimentDataTransformationConfig):
         self.config = config
 
     def transform_and_save_to_file(self):

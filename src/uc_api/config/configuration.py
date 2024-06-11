@@ -1,9 +1,9 @@
 from src.uc_api.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
 from src.uc_api.utils.common import read_yaml, create_directories
 from src.uc_api.entity import (
-    DataIngestionConfig,
-    DataValidationConfig,
-    DataTransformationConfig,
+    SentimentDataIngestionConfig,
+    SentimentDataValidationConfig,
+    SentimentDataTransformationConfig,
     SentimentModelTrainerEvaluationConfig,
     SentimentModelTestingConfig,
     SentimentPredictionConfig,
@@ -22,9 +22,9 @@ class ConfigurationManager:
 
         create_directories([self.config.artifacts_root])
 
-    def get_data_ingestion_config(self) -> DataIngestionConfig:
+    def get_sentiment_data_ingestion_config(self) -> SentimentDataIngestionConfig:
         # Data Ingestion configurations from yaml file
-        config = self.config.data_ingestion
+        config = self.config.sentiment_data_ingestion
 
         # Common Arguments Parameters from yaml file
         params_common = self.params.CommonArguments
@@ -34,7 +34,7 @@ class ConfigurationManager:
 
         create_directories([config.root_dir])
 
-        data_ingestion_config = DataIngestionConfig(
+        sentiment_data_ingestion_config = SentimentDataIngestionConfig(
             # Data Ingestion configurations
             root_dir=config.root_dir,
             unzip_dir=config.unzip_dir,
@@ -52,19 +52,19 @@ class ConfigurationManager:
 
         )
 
-        return data_ingestion_config
+        return sentiment_data_ingestion_config
     
     
-    def get_data_validation_config(self) -> DataValidationConfig:
+    def get_sentiment_data_validation_config(self) -> SentimentDataValidationConfig:
         # Data Validation configurations from yaml file
-        config = self.config.data_validation
+        config = self.config.sentiment_data_validation
         
         # Common Arguments Parameters from yaml file
         params_common = self.params.CommonArguments
 
         create_directories([config.root_dir])
 
-        data_validation_config = DataValidationConfig(
+        sentiment_data_validation_config = SentimentDataValidationConfig(
             # Data Validation configurations
             root_dir=config.root_dir,
             status_file=config.status_file,
@@ -73,12 +73,12 @@ class ConfigurationManager:
             data_split_type=params_common.data_split_type,
         )
 
-        return data_validation_config
+        return sentiment_data_validation_config
     
 
-    def get_data_transformation_config(self) -> DataTransformationConfig:
+    def get_sentiment_data_transformation_config(self) -> SentimentDataTransformationConfig:
         # Data Transformation configurations from yaml file
-        config = self.config.data_transformation
+        config = self.config.sentiment_data_transformation
 
         # Common Arguments Parameters from yaml file
         params_common = self.params.CommonArguments
@@ -89,7 +89,7 @@ class ConfigurationManager:
         create_directories([config.root_dir])
 
         # Populating the data class 
-        data_transformation_config = DataTransformationConfig(
+        sentiment_data_transformation_config = SentimentDataTransformationConfig(
             # Data Transformation configurations
             root_dir=config.root_dir,
             dataset_path=config.dataset_path,
@@ -106,12 +106,12 @@ class ConfigurationManager:
             max_length=params.max_length,
         )
 
-        return data_transformation_config
+        return sentiment_data_transformation_config
     
 
     def get_sentiment_model_trainer_and_evaluation_config(self) -> SentimentModelTrainerEvaluationConfig:
         # Data Transformation configurations from yaml file
-        config_prev = self.config.data_transformation
+        config_prev = self.config.sentiment_data_transformation
 
         # Model Trainer and Evaluation configurations
         config = self.config.sentiment_model_trainer_and_evaluation
@@ -149,7 +149,7 @@ class ConfigurationManager:
 
     def get_sentiment_model_testing_config(self) -> SentimentModelTestingConfig:
         # Data Transformation configurations from yaml file
-        config_prev_transformation = self.config.data_transformation
+        config_prev_transformation = self.config.sentiment_data_transformation
 
         # Model Trainer and Evaluation configurations from yaml file
         config_prev_model_trainer = self.config.sentiment_model_trainer_and_evaluation
@@ -177,7 +177,7 @@ class ConfigurationManager:
 
     def get_sentiment_prediction_config(self) -> SentimentPredictionConfig:
 
-        config_prev_transformation = self.config.data_transformation
+        config_prev_transformation = self.config.sentiment_data_transformation
 
         # Model Trainer and Evaluation configurations from yaml file
         config_prev_model_trainer = self.config.sentiment_model_trainer_and_evaluation

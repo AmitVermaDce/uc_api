@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 @dataclass(frozen=True)
-class DataIngestionConfig:
+class SentimentDataIngestionConfig:
     # Common Configurations
     root_dir: Path   
     unzip_dir: Path   
@@ -21,7 +21,7 @@ class DataIngestionConfig:
 
 
 @dataclass(frozen=True)
-class DataValidationConfig:
+class SentimentDataValidationConfig:
     # Common Configurations
     root_dir: Path
     status_file: str
@@ -31,7 +31,7 @@ class DataValidationConfig:
 
 
 @dataclass(frozen=True)
-class DataTransformationConfig:
+class SentimentDataTransformationConfig:
     # Common Configurations
     root_dir: Path
     dataset_path: Path

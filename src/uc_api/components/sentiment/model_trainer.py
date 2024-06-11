@@ -13,7 +13,7 @@ accelerator = Accelerator()
 
 
 
-class SentimentModelTrainerAndEvaluation:
+class ModelTrainerAndEvaluation:
 
     def __init__(self, config: SentimentModelTrainerEvaluationConfig):
         self.config = config
