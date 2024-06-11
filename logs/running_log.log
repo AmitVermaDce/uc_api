@@ -413,3 +413,186 @@ Sentiment Probabilities:
 Sentiment: neutral
 confidence: 0.6376392841339111 
 ]
+[2024-06-11 13:28:26: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 13:29:30: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 13:29:30: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage started <<<<<<]
+[2024-06-11 13:29:30: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 13:29:30: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 13:29:30: INFO:common: created directory at: artifacts]
+[2024-06-11 13:29:30: INFO:common: created directory at: artifacts/sentiment/data_ingestion/]
+[2024-06-11 13:29:30: INFO:data_ingestion: File already exists of size: ~ 55755 KB]
+[2024-06-11 13:29:37: INFO:data_ingestion: Successfully created arrow dataset]
+[2024-06-11 13:29:37: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage completed <<<<<<
+
+x===============================x]
+[2024-06-11 13:29:37: INFO:summarizer_model_trainer: >>>>>> stage: Data Validation stage started <<<<<<]
+[2024-06-11 13:29:37: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 13:29:37: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 13:29:37: INFO:common: created directory at: artifacts]
+[2024-06-11 13:29:37: INFO:common: created directory at: artifacts/sentiment/data_validation/]
+[2024-06-11 13:29:37: ERROR:summarizer_model_trainer: [WinError 3] The system cannot find the path specified: 'artifacts\\summarizer\\data_ingestion\\processed']
+Traceback (most recent call last):
+  File "C:\Work\Tasks\Repo\uc_api\summarizer_model_trainer.py", line 34, in <module>
+    data_validation.main()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\pipeline\summarizer\stage_02_data_validation.py", line 15, in main
+    data_validation.validate_all_files_exist()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_validation.py", line 25, in validate_all_files_exist
+    raise e
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_validation.py", line 15, in validate_all_files_exist
+    dataset_dirs = [f.name for f in os.scandir(path) if f.is_dir()]
+                                    ^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'artifacts\\summarizer\\data_ingestion\\processed'
+[2024-06-11 14:09:02: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 14:09:03: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage started <<<<<<]
+[2024-06-11 14:09:03: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:09:03: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:09:03: INFO:common: created directory at: artifacts]
+[2024-06-11 14:09:03: INFO:common: created directory at: artifacts/sentiment/data_ingestion/]
+[2024-06-11 14:09:03: INFO:data_ingestion: File already exists of size: ~ 55755 KB]
+[2024-06-11 14:09:04: INFO:data_ingestion: Error creating arrow dataset]
+[2024-06-11 14:09:04: ERROR:summarizer_model_trainer: list index out of range]
+Traceback (most recent call last):
+  File "C:\Work\Tasks\Repo\uc_api\summarizer_model_trainer.py", line 23, in <module>
+    data_ingestion.main()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\pipeline\summarizer\stage_01_data_ingestion.py", line 15, in main
+    data_ingestion.convert_csv_to_train_and_test_datasets()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 100, in convert_csv_to_train_and_test_datasets
+    raise e
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 65, in convert_csv_to_train_and_test_datasets
+    selected_file = [
+                    ^
+IndexError: list index out of range
+[2024-06-11 14:10:49: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 14:10:49: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage started <<<<<<]
+[2024-06-11 14:10:49: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:10:49: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:10:49: INFO:common: created directory at: artifacts]
+[2024-06-11 14:10:49: INFO:common: created directory at: artifacts/sentiment/data_ingestion/]
+[2024-06-11 14:10:49: INFO:data_ingestion: File already exists of size: ~ 55755 KB]
+[2024-06-11 14:10:50: INFO:data_ingestion: Error creating arrow dataset]
+[2024-06-11 14:10:50: ERROR:summarizer_model_trainer: list index out of range]
+Traceback (most recent call last):
+  File "C:\Work\Tasks\Repo\uc_api\summarizer_model_trainer.py", line 23, in <module>
+    data_ingestion.main()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\pipeline\summarizer\stage_01_data_ingestion.py", line 15, in main
+    data_ingestion.convert_csv_to_train_and_test_datasets()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 100, in convert_csv_to_train_and_test_datasets
+    raise e
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 65, in convert_csv_to_train_and_test_datasets
+    selected_file = [
+                    ^
+IndexError: list index out of range
+[2024-06-11 14:11:06: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 14:11:07: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:11:07: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:11:07: INFO:common: created directory at: artifacts]
+[2024-06-11 14:11:07: INFO:common: created directory at: artifacts/summarizer/data_ingestion]
+[2024-06-11 14:11:12: INFO:1651794886: Dataset downloaded from kaggle]
+[2024-06-11 14:11:16: INFO:1651794886: Successfully created arrow dataset]
+[2024-06-11 14:12:19: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 14:12:19: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage started <<<<<<]
+[2024-06-11 14:12:19: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:12:19: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:12:19: INFO:common: created directory at: artifacts]
+[2024-06-11 14:12:19: INFO:common: created directory at: artifacts/sentiment/data_ingestion/]
+[2024-06-11 14:12:19: INFO:data_ingestion: File already exists of size: ~ 55755 KB]
+[2024-06-11 14:12:20: INFO:data_ingestion: Error creating arrow dataset]
+[2024-06-11 14:12:20: ERROR:summarizer_model_trainer: list index out of range]
+Traceback (most recent call last):
+  File "C:\Work\Tasks\Repo\uc_api\summarizer_model_trainer.py", line 23, in <module>
+    data_ingestion.main()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\pipeline\summarizer\stage_01_data_ingestion.py", line 15, in main
+    data_ingestion.convert_csv_to_train_and_test_datasets()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 100, in convert_csv_to_train_and_test_datasets
+    raise e
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 65, in convert_csv_to_train_and_test_datasets
+    selected_file = [
+                    ^
+IndexError: list index out of range
+[2024-06-11 14:12:39: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 14:12:39: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage started <<<<<<]
+[2024-06-11 14:12:39: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:12:39: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:12:39: INFO:common: created directory at: artifacts]
+[2024-06-11 14:12:39: INFO:common: created directory at: artifacts/sentiment/data_ingestion/]
+[2024-06-11 14:12:39: INFO:data_ingestion: File already exists of size: ~ 55755 KB]
+[2024-06-11 14:12:40: INFO:data_ingestion: Error creating arrow dataset]
+[2024-06-11 14:12:40: ERROR:summarizer_model_trainer: list index out of range]
+Traceback (most recent call last):
+  File "C:\Work\Tasks\Repo\uc_api\summarizer_model_trainer.py", line 23, in <module>
+    data_ingestion.main()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\pipeline\summarizer\stage_01_data_ingestion.py", line 15, in main
+    data_ingestion.convert_csv_to_train_and_test_datasets()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 101, in convert_csv_to_train_and_test_datasets
+    raise e
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 65, in convert_csv_to_train_and_test_datasets
+    selected_file = [
+                    ^
+IndexError: list index out of range
+[2024-06-11 14:14:09: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 14:14:10: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage started <<<<<<]
+[2024-06-11 14:14:10: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:14:10: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:14:10: INFO:common: created directory at: artifacts]
+[2024-06-11 14:14:10: INFO:common: created directory at: artifacts/sentiment/data_ingestion/]
+[2024-06-11 14:14:10: INFO:data_ingestion: File already exists of size: ~ 55755 KB]
+[2024-06-11 14:14:10: INFO:data_ingestion: Error creating arrow dataset]
+[2024-06-11 14:14:10: ERROR:summarizer_model_trainer: list index out of range]
+Traceback (most recent call last):
+  File "C:\Work\Tasks\Repo\uc_api\summarizer_model_trainer.py", line 23, in <module>
+    data_ingestion.main()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\pipeline\summarizer\stage_01_data_ingestion.py", line 15, in main
+    data_ingestion.convert_csv_to_train_and_test_datasets()
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 98, in convert_csv_to_train_and_test_datasets
+    raise e
+  File "C:\Work\Tasks\Repo\uc_api\src\uc_api\components\summarizer\data_ingestion.py", line 63, in convert_csv_to_train_and_test_datasets
+    selected_file = [
+                    ^
+IndexError: list index out of range
+[2024-06-11 14:19:26: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 14:19:27: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage started <<<<<<]
+[2024-06-11 14:19:27: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:19:27: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:19:27: INFO:common: created directory at: artifacts]
+[2024-06-11 14:19:27: INFO:common: created directory at: artifacts/summarizer/data_ingestion]
+[2024-06-11 14:19:31: INFO:data_ingestion: Dataset downloaded from kaggle]
+[2024-06-11 14:19:35: INFO:data_ingestion: Successfully created arrow dataset]
+[2024-06-11 14:19:35: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage completed <<<<<<
+
+x===============================x]
+[2024-06-11 14:19:35: INFO:summarizer_model_trainer: >>>>>> stage: Data Validation stage started <<<<<<]
+[2024-06-11 14:19:35: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:19:35: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:19:35: INFO:common: created directory at: artifacts]
+[2024-06-11 14:19:35: INFO:common: created directory at: artifacts/sentiment/data_validation/]
+[2024-06-11 14:19:35: INFO:data_validation: Validation status: True]
+[2024-06-11 14:19:35: INFO:summarizer_model_trainer: >>>>>> stage: Data Validation stage completed <<<<<<
+
+x===============================x]
+[2024-06-11 14:20:20: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 14:20:20: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage started <<<<<<]
+[2024-06-11 14:20:20: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:20:20: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:20:20: INFO:common: created directory at: artifacts]
+[2024-06-11 14:20:20: INFO:common: created directory at: artifacts/summarizer/data_ingestion]
+[2024-06-11 14:20:20: INFO:data_ingestion: File already exists of size: ~ 20233 KB]
+[2024-06-11 14:20:22: INFO:data_ingestion: Successfully created arrow dataset]
+[2024-06-11 14:20:22: INFO:summarizer_model_trainer: >>>>>> stage: Data Ingestion stage completed <<<<<<
+
+x===============================x]
+[2024-06-11 14:20:22: INFO:summarizer_model_trainer: >>>>>> stage: Data Validation stage started <<<<<<]
+[2024-06-11 14:20:22: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:20:22: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:20:22: INFO:common: created directory at: artifacts]
+[2024-06-11 14:20:22: INFO:common: created directory at: artifacts/summarizer/data_validation/]
+[2024-06-11 14:20:22: INFO:data_validation: Validation status: True]
+[2024-06-11 14:20:22: INFO:summarizer_model_trainer: >>>>>> stage: Data Validation stage completed <<<<<<
+
+x===============================x]
+[2024-06-11 14:33:05: INFO:config: PyTorch version 2.3.1 available.]
+[2024-06-11 14:33:07: INFO:common: yaml file: config\config.yaml loaded successfully]
+[2024-06-11 14:33:07: INFO:common: yaml file: params.yaml loaded successfully]
+[2024-06-11 14:33:07: INFO:common: created directory at: artifacts]
+[2024-06-11 14:33:07: INFO:common: created directory at: artifacts/summarizer/data_ingestion]
+[2024-06-11 14:33:07: INFO:1651794886: File already exists of size: ~ 20233 KB]
+[2024-06-11 14:33:11: INFO:1651794886: Successfully created arrow dataset]

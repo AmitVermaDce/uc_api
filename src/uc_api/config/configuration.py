@@ -22,6 +22,7 @@ class ConfigurationManager:
 
         create_directories([self.config.artifacts_root])
 
+    # <================= Populating Sentiment Data Classes =================>
     def get_sentiment_data_ingestion_config(self) -> SentimentDataIngestionConfig:
         # Data Ingestion configurations from yaml file
         config = self.config.sentiment_data_ingestion
@@ -201,3 +202,57 @@ class ConfigurationManager:
         )
 
         return sentiment_model_prediction_config
+    
+    # <================= Populating Summarizer Data Classes =================>
+    def get_summarizer_data_ingestion_config(self) -> SentimentDataIngestionConfig:
+        # Data Ingestion configurations from yaml file
+        config = self.config.summarizer_data_ingestion
+
+        # Common Arguments Parameters from yaml file
+        params_common = self.params.CommonArguments
+
+        # Use case specific(Sentiment) parameters from yaml file
+        params = self.params.SummarizerArguments   
+
+        create_directories([config.root_dir])
+
+        sentiment_data_ingestion_config = SentimentDataIngestionConfig(
+            # Data Ingestion configurations
+            root_dir=config.root_dir,
+            unzip_dir=config.unzip_dir,
+            local_data_file=config.local_data_file,
+
+            # Common Arguments Parameters
+            data_split_type=params_common.data_split_type,
+            data_split_ratio=params_common.data_split_ratio,
+
+            # Use case specific parameters   
+            source_URL=config.source_URL,
+            outsource_file=config.outsource_file, 
+            feature_column_name=params.feature_column_name,
+            label_column_name = params.label_column_name,
+
+        )
+
+        return sentiment_data_ingestion_config
+    
+
+    def get_summarizer_data_validation_config(self) -> SentimentDataValidationConfig:
+        # Data Validation configurations from yaml file
+        config = self.config.summarizer_data_validation
+        
+        # Common Arguments Parameters from yaml file
+        params_common = self.params.CommonArguments
+
+        create_directories([config.root_dir])
+
+        sentiment_data_validation_config = SentimentDataValidationConfig(
+            # Data Validation configurations
+            root_dir=config.root_dir,
+            status_file=config.status_file,
+            
+            # Common Arguments Parameters
+            data_split_type=params_common.data_split_type,
+        )
+
+        return sentiment_data_validation_config

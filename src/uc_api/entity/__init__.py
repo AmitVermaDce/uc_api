@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-
+# <=============== Sentiment ===============>
 @dataclass(frozen=True)
 class SentimentDataIngestionConfig:
     # Common Configurations
@@ -89,3 +89,31 @@ class SentimentPredictionConfig:
     sentiment_class_dict: dict
     max_length: int
     dropout_parameter: float
+
+
+# <=============== Summarizer ===============>
+@dataclass(frozen=True)
+class SummarizerDataIngestionConfig:
+    # Common Configurations
+    root_dir: Path   
+    unzip_dir: Path   
+    local_data_file: Path
+
+    # Common Parameters
+    data_split_type: list
+    data_split_ratio: float   
+
+    # Parameters
+    source_URL: Path  
+    outsource_file: Path
+    feature_column_name: str
+    label_column_name: str
+
+@dataclass(frozen=True)
+class SummarizerDataValidationConfig:
+    # Common Configurations
+    root_dir: Path
+    status_file: str
+    
+    # Common Parameters
+    data_split_type: list

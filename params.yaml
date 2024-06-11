@@ -20,4 +20,6 @@ SentimentArguments:
 SummarizerArguments:
   feature_column_name: "text"
   label_column_name: "headlines"
+  batch_size: 64    
+  max_length: 1048
   
